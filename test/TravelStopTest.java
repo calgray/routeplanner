@@ -28,6 +28,11 @@ public class TravelStopTest {
    */
   @Before
   public void setUp() throws Exception {
+    double latitude = 0.0;
+    double longitude = 0.0;
+    String street = "";
+    String suburb = "";
+    TravelStop(latitude, longitude, street, suburb);
   }
 
   /**

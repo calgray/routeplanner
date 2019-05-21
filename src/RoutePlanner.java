@@ -8,6 +8,15 @@ import java.util.List;
  */
 public class RoutePlanner {
 
+  private double m_startLongitude;
+  private double m_startLatitude;
+  private Integer m_leaveHour;
+  private Integer m_leaveMinute;
+  private double m_destinationLongitude;
+  private double m_destinationLatitude;
+  private Integer m_arriveHour;
+  private Integer m_arriveMinute;
+
   /**
    * Construct a RoutePlanner object, specifying a starting location (specified
    * by latitude and longitude), and a destination location (specified in the
@@ -34,28 +43,28 @@ public class RoutePlanner {
   }
 
   public double getStartLongitude() {
-    return 0;
+    return m_startLongitude;
   }
   public double getStartLatitude() {
-    return 0;
+    return m_startLatitude;
   }
   public Integer getLeaveHour() {
-    return 0;
+    return m_leaveHour;
   }
   public Integer getLeaveMinute() {
-    return 0;
+    return m_leaveMinute;
   }
   public double getDestinationLongitude() {
-    return 0;
+    return m_destinationLongitude;
   }
   public double getDestinationLatitude() {
-    return 0;
+    return m_destinationLatitude;
   }
   public Integer getArriveHour() {
-    return 0;
+    return m_arriveHour;
   }
   public Integer getArriveMinute() {
-    return 0;
+    return m_arriveMinute;
   }
   
   /** Return a list of directions for the user to follow.
@@ -78,7 +87,4 @@ public class RoutePlanner {
   public List<TravelStop> getDirections(String description[]) {
     return null;
   }
-  
-  
-  
 }

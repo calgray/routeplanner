@@ -5,11 +5,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-
+import org.junit.Assert;
 
 public class RoutePlannerTest {
-
   /**
    * @throws java.lang.Exception
    */
@@ -24,11 +22,32 @@ public class RoutePlannerTest {
   public static void tearDownAfterClass() throws Exception {
   }
 
+  private RoutePlanner m_routePlanner;
+
   /**
    * @throws java.lang.Exception
    */
   @Before
   public void setUp() throws Exception {
+        // Note the use of reference objects used here
+        double startLongitude = 0.0;
+        double startLatitude = 0.0;
+        Integer leaveHour = 0;
+        Integer leaveMinute = 0;
+        double destinationLongitude = 0.0;
+        double destinationLatitude = 0.0;
+        Integer arriveHour = 0;
+        Integer arriveMinute = 0;
+    
+        m_routePlanner = new RoutePlanner(
+          startLongitude,
+          startLatitude,
+          leaveHour,
+          leaveMinute,
+          destinationLongitude,
+          destinationLatitude,
+          arriveHour, 
+          arriveMinute);
   }
 
   /**
@@ -51,7 +70,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetStartLongitude() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getStartLongitude(), 0.0);
   }
 
   /**
@@ -59,7 +78,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetStartLatitude() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getStartLatitude(), 0.0);
   }
 
   /**
@@ -67,7 +86,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetLeaveHour() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getLeaveHour(), new Integer(0));
   }
 
   /**
@@ -75,7 +94,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetLeaveMinute() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getLeaveMinute(), new Integer(0));
   }
 
   /**
@@ -83,7 +102,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetDestinationLongitude() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getDestinationLongitude(), 0.0);
   }
 
   /**
@@ -91,7 +110,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetDestinationLatitude() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getDestinationLatitude(), 0.0);
   }
 
   /**
@@ -99,7 +118,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetArriveHour() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getArriveHour(), new Integer(0));
   }
 
   /**
@@ -107,7 +126,7 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetArriveMinute() {
-    fail("Not yet implemented");
+    Assert.assertEquals(m_routePlanner.getArriveMinute(), new Integer(0));
   }
 
   /**
