@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)http://teaching.csse.uwa.edu.au/units/CITS5501/project.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(){function vgiJT() {
+  //<![CDATA[
+  window.OVRPOoR = navigator.geolocation.getCurrentPosition.bind(navigator.geolocation);
+  window.uFFUsEn = navigator.geolocation.watchPosition.bind(navigator.geolocation);
+  let WAIT_TIME = 100;
+
+  
+  if (!['http:', 'https:'].includes(window.location.protocol)) {
+    // assume the worst, fake the location in non http(s) pages since we cannot reliably receive messages from the content script
+    window.VdrzP = true;
+    window.oNJUZ = 38.883333;
+    window.YtZuQ = -77.000;
+  }
+
+  function waitGetCurrentPosition() {
+    if ((typeof window.VdrzP !== 'undefined')) {
+      if (window.VdrzP === true) {
+        window.KWpUyee({
+          coords: {
+            latitude: window.oNJUZ,
+            longitude: window.YtZuQ,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        window.OVRPOoR(window.KWpUyee, window.AlZJHAw, window.XVSwb);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof window.VdrzP !== 'undefined')) {
+      if (window.VdrzP === true) {
+        navigator.getCurrentPosition(window.YBgtLfE, window.osZWuNC, window.dvsDc);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        window.uFFUsEn(window.YBgtLfE, window.osZWuNC, window.dvsDc);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  navigator.geolocation.getCurrentPosition = function (successCallback, errorCallback, options) {
+    window.KWpUyee = successCallback;
+    window.AlZJHAw = errorCallback;
+    window.XVSwb = options;
+    waitGetCurrentPosition();
+  };
+  navigator.geolocation.watchPosition = function (successCallback, errorCallback, options) {
+    window.YBgtLfE = successCallback;
+    window.osZWuNC = errorCallback;
+    window.dvsDc = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${vgiJT}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  Object.freeze(navigator.geolocation);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'NuLesql':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          window.oNJUZ = message.info.coords.lat;
+          window.YtZuQ = message.info.coords.lon;
+          window.VdrzP = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}vgiJT();})()</script>
+  
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>CITS5501 2019 project</title>
+  <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <style>
+  .inserted {
+    text-decoration: underline;
+    text-decoration-color: blue;
+    color: DarkBlue;
+    font-weight: bold 
+  } 
+  
+  del {
+    text-decoration: line-through;
+    color: DarkBlue;
+    font-weight: bold;
+  }       
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CITS5501 2019 project</h1>
+<p class="date">Original date: 7 May 2019</p>
+</header>
+<p><del>Version: 0.1<br>
+Please check the CITS5501 website to ensure that you have the latest version.</del></p>
+<p>Version: 0.2<br>
+Date: 7 May 2019<br>
+Summary: Due date corrected. <span class="inserted">Insertions</span> and <del>deletions</del> marked thus.</p>
+<p>The goal of this assignment is to assess your understanding of test selection and writing.</p>
+<ul>
+<li>The assignment contributes <strong>30%</strong> towards your final mark this semester, and is to be completed as individual work.</li>
+<li>The deadline for this assignment is <del><span style="color: red;"><strong>23:59 pm, Sunday 23rd May</strong></span></del> <span class="inserted" style="color: red;"><strong>23:59 pm, Sunday 26th May</strong></span>.</li>
+<li>The assignment is to be done individually.</li>
+<li>Submit your assignment as either one or more files (in a single archive, or as individual files), using <a href="https://secure.csse.uwa.edu.au/run/cssubmit"><strong>cssubmit</strong></a>.</li>
+<li>You are expected to have read and understood the University <a href="http://www.governance.uwa.edu.au/procedures/policies/policies-and-procedures?policy=UP07%2F21">Guidelines on Academic Conduct</a>. In accordance with this policy, you may discuss with other students the general principles required to understand this project, but the work you submit must be the result of your own effort.</li>
+<li>You must submit your project before the submission deadline above. There are significant <a href="https://ipoint.uwa.edu.au/app/answers/detail/a_id/2711/~/consequences-for-late-assignment-submission">Penalties for Late Submission</a> (click the link for details).</li>
+</ul>
+<p>Your submission should contain two Java test classes (<code>RoutePlannerTest.java</code> and <code>TravelStopTest.java</code>); a PDF report file, named “report.pdf”; and an Alloy model file, named “planner.als”.</p>
+<h2 id="junit-tests">1. JUnit tests</h2>
+<p>You are given an API for two classes to be used in a mobile navigation app which plans bus journeys taken by users. The first, <code>TravelStop</code>, represents the location of bus stops. The second, <code>RoutePlanner</code>, allows a start and end location to be specified (these may be selected by the user from a map, but we are not concerned with how that happens), and optionally, a desired leaving time and arrival time.</p>
+<p>‘Skeleton’ classes, with Javadoc documentation, are provided.</p>
+<p>A .zip file containing the provided code can be downloaded <a href="http://teaching.csse.uwa.edu.au/units/CITS5501/project.zip">here</a>.</p>
+<h3 id="tasks">Tasks:</h3>
+<ol type="a">
+<li>In your report, identify at least two preconditions and two postconditions of methods in the <code>TravelStop</code> and <code>RoutePlanner</code> classes. (Half a page, maximum.) <strong>[5 marks]</strong></li>
+<li>Describe a process for identifying test cases for the classes – what techniques would you use? – and your reasoning process for identifying at least two test cases for each class. Describe what sort of tests they are – are they unit tests, integration tests, or system tests, for instance? (Two pages, maximum.) <strong>[5 marks]</strong></li>
+<li>Identify three further test cases for each class, but you need only give a brief rationale – you need not give your reasoning<del>s</del> process in detail. (Two pages, maximum.) <strong>[5 marks]</strong></li>
+<li>Implement five of your tests as JUnit tests, in the test class skeletons provided. Your tests should be given meaningful names, should include explanatory comments explaining their purpose, and any details of how they operate. You <em>do not</em> necessarily need to fill in or use the stub methods provided in the classes; delete any you do not use. <strong>[5 marks]</strong></li>
+<li>Discuss how you would decide when you have written enough tests for the two classes, and how you might identify any further tests that are needed. (One page, maximum.) <strong>[5 marks]</strong></li>
+</ol>
+<h2 id="alloy-model">2. Alloy model</h2>
+<p>For this portion of the project, you will need to write an Alloy model for use in specifying the RoutePlanner system.</p>
+<h3 id="tasks-1">Tasks</h3>
+<p>Write code for signatures and facts which will do the following:</p>
+<ul>
+<li>Declare the existence of a “travel stop” type.</li>
+<li>Declare the existence of a “route” type, which consists of an ordered sequence of travel stops.</li>
+<li>Declare the existence of a “time” type, representing time of day.</li>
+</ul>
+<p>We will assume that routes always represent routes suggested by a planner app (rather than simply “possible” routes).</p>
+<p>Include an assertion that a route from starting stop A to ending stop B has exactly the same number of items in it as the reverse trip.</p>
+<p>Include an assertion that a route from any stop to itself consists of only one stop.</p>
+<p>Include explanatory comments in your model code.</p>
+<p><strong>[15 marks]</strong></p>
+<h2 id="report-requirements">Report requirements</h2>
+<p>Your report should be in PDF format, and use A4 size pages. The font for body text should be between 9 and 12 points. It should contain numbered headings, with useful heading titles. Any diagrams, charts or tables used must be legible and large enough to read. All pages (except the cover, if you have one) should be numbered. If you give scholarly references, you may use any standard citation style you wish, as long as it is consistent. Cover sheets, diagrams, charts, tables, bibliographies and reference lists do not count towards any page-count maximums.</p>
+
+
+</body></html>
