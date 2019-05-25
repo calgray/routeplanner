@@ -51,8 +51,7 @@ fact ReverseTripSameLength {
   no fr: Route, rr: Route | fr.stops.first = rr.stops.last and fr.stops.last = rr.stops.first and #fr.stops != #rr.stops
 }
 
-// Derived Asserts
-// Required asserts
+// Required Asserts
 
 // Calculating the reverse trip should have the same number of items
 assert ReverseTripSameSize {
