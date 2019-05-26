@@ -86,6 +86,15 @@ public class RoutePlannerTest {
    */
   @After
   public void tearDown() throws Exception {
+    // Assuming RoutePlanner is an immutable class
+    testGetStartLongitude();
+    testGetStartLatitude();
+    testGetLeaveHour();
+    testGetLeaveMinute();
+    testGetDestinationLongitude();
+    testGetDestinationLatitude();
+    testGetLeaveHour();
+    testGetLeaveMinute();
   }
 
   /**
@@ -221,14 +230,45 @@ public class RoutePlannerTest {
     assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { "notempty" } )));
     assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { null, "notempty" } )));
 
-    // Test return value
+    // Test routePlanner0 return value
     List<TravelStop> stops = m_routePlanner0.getDirections(new String[1]);
     assertNotNull(stops);
+
+    //Check route start and end
+    double routeStartError = 1.0;
+    assertEquals(stops.get(0).getLongitude(), m_routePlanner0.getStartLongitude(), routeStartError);
+    assertEquals(stops.get(0).getLatitude(), m_routePlanner0.getStartLatitude(), routeStartError);
+    double routeDestinationError = 1.0;
+    assertEquals(stops.get(stops.size()-1).getLongitude(), m_routePlanner0.getDestinationLatitude(), routeDestinationError);
+    assertEquals(stops.get(stops.size()-1).getLatitude(), m_routePlanner0.getStartLatitude(), routeDestinationError);
+
+    //Check for routePlanner mutation
+    assertEquals(0.0, m_routePlanner0.getStartLongitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getStartLatitude(), 0.0);
+    assertEquals(0, (int)m_routePlanner0.getLeaveHour());
+    assertEquals(0, (int)m_routePlanner0.getLeaveMinute());
+    assertEquals(0.0, m_routePlanner0.getDestinationLongitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getDestinationLatitude(), 0.0);
+    assertNotNull(m_routePlanner0.getArriveHour());
+    assertNotNull(m_routePlanner0.getArriveMinute());
+
+
+    //Test impossibleRoutePlanner
     assertTrue(throwsIllegalStateException(() -> m_impossibleRoutePlanner.getDirections(new String[1])));
+
+    //Check for routePlanner mutation
+    assertEquals(100.0, m_impossibleRoutePlanner.getStartLongitude(), 0.0);
+    assertEquals(200.0, m_impossibleRoutePlanner.getStartLatitude(), 0.0);
+    assertNotNull(m_impossibleRoutePlanner.getLeaveHour());
+    assertNotNull(m_impossibleRoutePlanner.getLeaveMinute());
+    assertEquals(190.0, m_impossibleRoutePlanner.getDestinationLongitude(), 0.0);
+    assertEquals(449.0, m_impossibleRoutePlanner.getDestinationLatitude(), 0.0);
+    assertEquals(6, (int)m_impossibleRoutePlanner.getArriveHour());
+    assertEquals(3, (int)m_impossibleRoutePlanner.getArriveMinute());
   }
 
   // This pattern can be replaced with assertThrows in JUnit5
-  interface ThrowsInterface {
+  private interface ThrowsInterface {
     void operation();
   }
 
