@@ -72,8 +72,8 @@ public class RoutePlannerTest {
     leaveMinute = null;
     destinationLongitude = 190.0;
     destinationLatitude = 449.0;
-    arriveHour = 6;
-    arriveMinute = 3;
+    arriveHour = null;
+    arriveMinute = null;
     m_impossibleRoutePlanner = new RoutePlanner(
             startLongitude, startLatitude,
             leaveHour, leaveMinute,
@@ -83,6 +83,7 @@ public class RoutePlannerTest {
 
   /**
    * @throws java.lang.Exception
+   * Pre-conditions: setUp has been called
    */
   @After
   public void tearDown() throws Exception {
@@ -99,6 +100,9 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#RoutePlanner(double, double, java.lang.Integer, java.lang.Integer, double, double, java.lang.Integer, java.lang.Integer)}.
+   * Tests the creation of the RoutePlanner and implicit instance characteristics.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testRoutePlanner() {
@@ -135,6 +139,8 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#getStartLongitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetStartLongitude() {
@@ -145,6 +151,8 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#getStartLatitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetStartLatitude() {
@@ -155,26 +163,34 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#getLeaveHour()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetLeaveHour() {
     assertEquals(0, (int)m_routePlanner0.getLeaveHour());
     assertNotNull(m_routePlanner1.getLeaveHour());
     assertNotNull(m_routePlanner1Copy.getLeaveHour());
+    assertNotNull(m_impossibleRoutePlanner.getLeaveHour());
   }
 
   /**
    * Test method for {@link RoutePlanner#getLeaveMinute()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetLeaveMinute() {
     assertEquals(0, (int)m_routePlanner0.getLeaveMinute());
     assertNotNull(m_routePlanner1.getLeaveMinute());
     assertNotNull(m_routePlanner1Copy.getLeaveMinute());
+    assertNotNull(m_impossibleRoutePlanner.getLeaveMinute());
   }
 
   /**
    * Test method for {@link RoutePlanner#getDestinationLongitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetDestinationLongitude() {
@@ -185,6 +201,8 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#getDestinationLatitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetDestinationLatitude() {
@@ -195,26 +213,35 @@ public class RoutePlannerTest {
 
   /**
    * Test method for {@link RoutePlanner#getArriveHour()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetArriveHour() {
     assertNotNull(m_routePlanner0.getArriveHour());
     assertEquals(5, (int)m_routePlanner1.getArriveHour());
     assertEquals(5, (int)m_routePlanner1Copy.getArriveHour());
+    assertNotNull(m_impossibleRoutePlanner.getArriveHour());
   }
 
   /**
    * Test method for {@link RoutePlanner#getArriveMinute()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetArriveMinute() {
     assertNotNull(m_routePlanner0.getArriveMinute());
     assertEquals(8, (int)m_routePlanner1.getArriveMinute());
     assertEquals(8, (int)m_routePlanner1Copy.getArriveMinute());
+    assertNotNull(m_impossibleRoutePlanner.getArriveMinute());
   }
 
   /**
    * Test method for {@link RoutePlanner#getDirections(String[])}.
+   * Tests valid input variables and the correctness of the output.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetDirections() {

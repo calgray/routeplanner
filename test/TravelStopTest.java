@@ -57,6 +57,7 @@ public class TravelStopTest {
 
   /**
    * Test method for {@link TravelStop#TravelStop(double, double, java.lang.String, java.lang.String)}.
+   * Tests the creation of a travel stop.
    * Pre-conditions: setUp has been called
    * Post-conditions: state remains const
    */
