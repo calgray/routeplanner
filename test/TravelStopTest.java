@@ -1,13 +1,15 @@
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 
 public class TravelStopTest {
+
+  private TravelStop m_travelStopNull;
+  private TravelStop m_travelStop0;
+  private TravelStop m_travelStop0Copy;
+
+  private TravelStop m_travelStop1;
 
   /**
    * @throws java.lang.Exception
@@ -30,9 +32,17 @@ public class TravelStopTest {
   public void setUp() throws Exception {
     double latitude = 0.0;
     double longitude = 0.0;
-    String street = "";
-    String suburb = "";
-    TravelStop(latitude, longitude, street, suburb);
+    String street = "real street";
+    String suburb = "real suburb";
+    m_travelStop0 = new TravelStop(latitude, longitude, street, suburb);
+    m_travelStop0Copy = new TravelStop(latitude, longitude, street, suburb);
+
+    latitude = 10.0;
+    longitude = 11.0;
+    street = "fake street";
+    suburb = "real suburb";
+    m_travelStop1 = new TravelStop(latitude, longitude, street, suburb);
+
   }
 
   /**
@@ -44,42 +54,66 @@ public class TravelStopTest {
 
   /**
    * Test method for {@link TravelStop#TravelStop(double, double, java.lang.String, java.lang.String)}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testTravelStop() {
-    fail("Not yet implemented");
+    assertNull(m_travelStopNull);
+
+    assertNotEquals(m_travelStop0, m_travelStop1);
+    assertTrue(m_travelStop0 == m_travelStop0);
+    assertFalse(m_travelStop0 == m_travelStop0Copy);
+    assertNotEquals(m_travelStop0, m_travelStop0Copy); // equals override has not been implemented
   }
 
   /**
    * Test method for {@link TravelStop#getLatitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetLatitude() {
-    fail("Not yet implemented");
+    assertEquals(0.0, m_travelStop0.getLatitude(), 0.0);
+    assertEquals(m_travelStop0.getLatitude(), m_travelStop0Copy.getLatitude(), 0.0);
+    assertEquals(10.0, m_travelStop1.getLatitude(),0.0);
   }
 
   /**
    * Test method for {@link TravelStop#getLongitude()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetLongitude() {
-    fail("Not yet implemented");
+    assertEquals(0.0, m_travelStop0.getLongitude(), 0.0);
+    assertEquals(m_travelStop0.getLongitude(), m_travelStop0Copy.getLongitude(), 0.0);
+    assertEquals(11.0, m_travelStop1.getLongitude(), 0.0);
   }
 
   /**
    * Test method for {@link TravelStop#getStreet()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetStreet() {
-    fail("Not yet implemented");
+    assertEquals("real street", m_travelStop0.getStreet());
+    assertEquals(m_travelStop0.getStreet(), m_travelStop0Copy.getStreet());
+
+    assertEquals("real street", m_travelStop1.getStreet());
   }
 
   /**
    * Test method for {@link TravelStop#getSuburb()}.
+   * Pre-conditions: setUp has been called
+   * Post-conditions: state remains const
    */
   @Test
   public void testGetSuburb() {
-    fail("Not yet implemented");
+    assertEquals("real suburb", m_travelStop0.getSuburb());
+    assertEquals(m_travelStop0.getSuburb(), m_travelStop0Copy.getSuburb());
+    assertEquals("real suburb", m_travelStop1.getSuburb());
   }
 
 }

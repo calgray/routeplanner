@@ -38,8 +38,44 @@ public class RoutePlanner {
    * @param arriveHour
    * @param arriveMinute
    */
-  public RoutePlanner(double startLongitude, double startLatitude, Integer leaveHour, Integer leaveMinute,
-      double destinationLongitude, double destinationLatitude, Integer arriveHour, Integer arriveMinute) {
+  public RoutePlanner(double startLongitude, double startLatitude,
+                      Integer leaveHour, Integer leaveMinute,
+                      double destinationLongitude, double destinationLatitude,
+                      Integer arriveHour, Integer arriveMinute) {
+    m_startLongitude = startLongitude;
+    m_startLatitude = startLatitude;
+    m_leaveHour = leaveHour;
+    m_leaveMinute = leaveMinute;
+    m_destinationLongitude = destinationLongitude;
+    m_destinationLatitude = destinationLatitude;
+    m_arriveHour = arriveHour;
+    m_arriveMinute = arriveMinute;
+
+    boolean currentTimeMode = m_leaveHour == null && m_leaveMinute == null && m_arriveHour == null && m_arriveMinute == null;
+    boolean leaveTimeMode = m_leaveHour != null && m_leaveMinute != null && m_arriveHour == null && m_arriveMinute == null;
+    boolean arriveTimeMode = m_leaveHour == null && m_leaveMinute == null && m_arriveHour != null && m_arriveMinute != null;
+
+    if(!(currentTimeMode || arriveTimeMode || leaveTimeMode)) {
+      throw new IllegalArgumentException("only one of leave time or arrive time arguments must be provided");
+    }
+    else {
+      if(currentTimeMode)
+      {
+        m_leaveHour = 0; // current time
+        m_leaveMinute = 0; // current time
+        leaveTimeMode = true;
+      }
+      if(leaveTimeMode)
+      {
+        m_arriveHour = m_leaveHour;
+        m_arriveMinute = m_leaveMinute;
+      }
+      else if(arriveTimeMode)
+      {
+        m_leaveHour = m_arriveHour;
+        m_leaveMinute = m_arriveMinute;
+      }
+    }
   }
 
   public double getStartLongitude() {
@@ -85,6 +121,16 @@ public class RoutePlanner {
    * 
    */
   public List<TravelStop> getDirections(String description[]) {
+    if(description == null)
+    {
+      throw new IllegalArgumentException("argument: {description} is null");
+    }
+    if(description.length != 1) {
+      throw new IllegalArgumentException("argument: {description} length is not 1");
+    }
+    if(description[0] != null && !description[0].isEmpty()) {
+      throw new IllegalArgumentException("argument: {description} at index 0 is not empty");
+    }
     return null;
   }
 }

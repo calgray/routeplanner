@@ -5,12 +5,20 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Assert;
+
+import java.util.List;
 
 public class RoutePlannerTest {
   /**
    * @throws java.lang.Exception
    */
+
+  private RoutePlanner m_routePlannerNull;
+  private RoutePlanner m_routePlanner0;
+  private RoutePlanner m_routePlanner1;
+  private RoutePlanner m_routePlanner1Copy;
+  private RoutePlanner m_impossibleRoutePlanner;
+
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
   }
@@ -22,32 +30,55 @@ public class RoutePlannerTest {
   public static void tearDownAfterClass() throws Exception {
   }
 
-  private RoutePlanner m_routePlanner;
-
   /**
    * @throws java.lang.Exception
    */
   @Before
   public void setUp() throws Exception {
-        // Note the use of reference objects used here
-        double startLongitude = 0.0;
-        double startLatitude = 0.0;
-        Integer leaveHour = 0;
-        Integer leaveMinute = 0;
-        double destinationLongitude = 0.0;
-        double destinationLatitude = 0.0;
-        Integer arriveHour = 0;
-        Integer arriveMinute = 0;
-    
-        m_routePlanner = new RoutePlanner(
-          startLongitude,
-          startLatitude,
-          leaveHour,
-          leaveMinute,
-          destinationLongitude,
-          destinationLatitude,
-          arriveHour, 
-          arriveMinute);
+    double startLongitude = 0.0;
+    double startLatitude = 0.0;
+    Integer leaveHour = 0;
+    Integer leaveMinute = 0;
+    double destinationLongitude = 0.0;
+    double destinationLatitude = 0.0;
+    Integer arriveHour = null;
+    Integer arriveMinute = null;
+    m_routePlanner0 = new RoutePlanner(startLongitude, startLatitude,
+            leaveHour, leaveMinute,
+            destinationLongitude, destinationLatitude,
+            arriveHour, arriveMinute);
+
+    startLongitude = 10.0;
+    startLatitude = 11.0;
+    leaveHour = null;
+    leaveMinute = null;
+    destinationLongitude = 20.0;
+    destinationLatitude = 40.0;
+    arriveHour = 5;
+    arriveMinute = 8;
+    m_routePlanner1 = new RoutePlanner(
+            startLongitude, startLatitude,
+            leaveHour, leaveMinute,
+            destinationLongitude, destinationLatitude,
+            arriveHour, arriveMinute);
+    m_routePlanner1Copy = new RoutePlanner(startLongitude, startLatitude,
+            leaveHour, leaveMinute,
+            destinationLongitude, destinationLatitude,
+            arriveHour, arriveMinute);
+
+    startLongitude = 100.0;
+    startLatitude = 200.0;
+    leaveHour = null;
+    leaveMinute = null;
+    destinationLongitude = 190.0;
+    destinationLatitude = 449.0;
+    arriveHour = 6;
+    arriveMinute = 3;
+    m_impossibleRoutePlanner = new RoutePlanner(
+            startLongitude, startLatitude,
+            leaveHour, leaveMinute,
+            destinationLongitude, destinationLatitude,
+            arriveHour, arriveMinute);
   }
 
   /**
@@ -62,7 +93,35 @@ public class RoutePlannerTest {
    */
   @Test
   public void testRoutePlanner() {
-    fail("Not yet implemented");
+
+    // Uninitialized class instance is null
+    assertNull(m_routePlannerNull);
+
+    assertTrue(m_routePlanner1 == m_routePlanner1);
+    assertFalse(m_routePlanner1 == m_routePlanner1Copy);
+    assertNotEquals(m_routePlanner0, m_routePlanner1);
+    assertNotEquals(m_routePlanner0, m_routePlanner1Copy); // equals method not implemented
+
+    // Either leave time, arrive time or both can be set to null
+    assertFalse(throwsIllegalArgumentException(() -> new RoutePlanner(0,0, null,null,0,0,null, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,null,0,0,null, 0)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,null,0,0,0, null)));
+    assertFalse(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,null,0,0,0, 0)));
+
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0, null,0,0,0,null, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,0,0,0,null, 0)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,0,0,0,0, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,null,0,0,0,0, 0)));
+
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0, 0,null,0,0,null, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,null,0,0,null, 0)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,null,0,0,0, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,null,0,0,0, 0)));
+
+    assertFalse(throwsIllegalArgumentException(() -> new RoutePlanner(0,0, 0,0,0,0,null, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,0,0,0,null, 0)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,0,0,0,0, null)));
+    assertTrue(throwsIllegalArgumentException(() -> new RoutePlanner(0,0,0,0,0,0,0, 0)));
   }
 
   /**
@@ -70,7 +129,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetStartLongitude() {
-    Assert.assertEquals(m_routePlanner.getStartLongitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getStartLongitude(), 0.0);
+    assertEquals(10.0, m_routePlanner1.getStartLongitude(), 0.0);
+    assertEquals(10.0, m_routePlanner1Copy.getStartLongitude(), 0.0);
   }
 
   /**
@@ -78,7 +139,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetStartLatitude() {
-    Assert.assertEquals(m_routePlanner.getStartLatitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getStartLatitude(), 0.0);
+    assertEquals(11.0, m_routePlanner1.getStartLatitude(), 0.0);
+    assertEquals(11.0, m_routePlanner1Copy.getStartLatitude(), 0.0);
   }
 
   /**
@@ -86,7 +149,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetLeaveHour() {
-    Assert.assertEquals(m_routePlanner.getLeaveHour(), new Integer(0));
+    assertEquals(0, (int)m_routePlanner0.getLeaveHour());
+    assertNotNull(m_routePlanner1.getLeaveHour());
+    assertNotNull(m_routePlanner1Copy.getLeaveHour());
   }
 
   /**
@@ -94,7 +159,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetLeaveMinute() {
-    Assert.assertEquals(m_routePlanner.getLeaveMinute(), new Integer(0));
+    assertEquals(0, (int)m_routePlanner0.getLeaveMinute());
+    assertNotNull(m_routePlanner1.getLeaveMinute());
+    assertNotNull(m_routePlanner1Copy.getLeaveMinute());
   }
 
   /**
@@ -102,7 +169,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetDestinationLongitude() {
-    Assert.assertEquals(m_routePlanner.getDestinationLongitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getDestinationLongitude(), 0.0);
+    assertEquals(20.0, m_routePlanner1.getDestinationLongitude(), 0.0);
+    assertEquals(20.0, m_routePlanner1Copy.getDestinationLongitude(), 0.0);
   }
 
   /**
@@ -110,7 +179,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetDestinationLatitude() {
-    Assert.assertEquals(m_routePlanner.getDestinationLatitude(), 0.0);
+    assertEquals(0.0, m_routePlanner0.getDestinationLatitude(), 0.0);
+    assertEquals(40.0, m_routePlanner1.getDestinationLatitude(), 0.0);
+    assertEquals(40.0, m_routePlanner1Copy.getDestinationLatitude(), 0.0);
   }
 
   /**
@@ -118,7 +189,9 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetArriveHour() {
-    Assert.assertEquals(m_routePlanner.getArriveHour(), new Integer(0));
+    assertNotNull(m_routePlanner0.getArriveHour());
+    assertEquals(5, (int)m_routePlanner1.getArriveHour());
+    assertEquals(5, (int)m_routePlanner1Copy.getArriveHour());
   }
 
   /**
@@ -126,15 +199,58 @@ public class RoutePlannerTest {
    */
   @Test
   public void testGetArriveMinute() {
-    Assert.assertEquals(m_routePlanner.getArriveMinute(), new Integer(0));
+    assertNotNull(m_routePlanner0.getArriveMinute());
+    assertEquals(8, (int)m_routePlanner1.getArriveMinute());
+    assertEquals(8, (int)m_routePlanner1Copy.getArriveMinute());
   }
 
   /**
-   * Test method for {@link RoutePlanner#getDirections()}.
+   * Test method for {@link RoutePlanner#getDirections(String[])}.
    */
   @Test
   public void testGetDirections() {
-    fail("Not yet implemented");
+    // Test arguments
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(null)));
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[0])));
+    assertFalse(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[1])));
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[2])));
+    // new initializer syntax
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] {} )));
+    assertFalse(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { null } )));
+    assertFalse(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { "" } )));
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { "notempty" } )));
+    assertTrue(throwsIllegalArgumentException(() -> m_routePlanner0.getDirections(new String[] { null, "notempty" } )));
+
+    // Test return value
+    List<TravelStop> stops = m_routePlanner0.getDirections(new String[1]);
+    assertNotNull(stops);
+    assertTrue(throwsIllegalStateException(() -> m_impossibleRoutePlanner.getDirections(new String[1])));
   }
 
+  // This pattern can be replaced with assertThrows in JUnit5
+  interface ThrowsInterface {
+    void operation();
+  }
+
+  private boolean throwsIllegalArgumentException(ThrowsInterface object) {
+    boolean hasThrown = false;
+    try {
+      object.operation();
+    } catch(IllegalArgumentException e)
+    {
+      hasThrown = true;
+    }
+    return hasThrown;
+  }
+
+  private boolean throwsIllegalStateException(ThrowsInterface object) {
+    boolean hasThrown = false;
+    try {
+      object.operation();
+    } catch(IllegalStateException e)
+    {
+      hasThrown = true;
+    }
+    return hasThrown;
+  }
 }
